@@ -3,7 +3,6 @@ package com.borate.pravin.pim.config;
 import com.borate.pravin.pim.entities.User;
 import com.borate.pravin.pim.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,6 +20,13 @@ public class AuthUserDetailService implements UserDetailsService {
     @Autowired
     UserService userService;
 
+    /**
+     * Load User by Username
+     *
+     * @param email logged in email
+     * @return AuthUserDetail
+     * @throws UsernameNotFoundException
+     */
     @Override
     public AuthUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         if (!email.isEmpty()) {

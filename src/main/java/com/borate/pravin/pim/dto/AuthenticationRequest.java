@@ -1,6 +1,8 @@
 package com.borate.pravin.pim.dto;
 
 /**
+ * Dto for Authentication Request
+ *
  * @author Pravin Borate
  * 14/03/21
  */

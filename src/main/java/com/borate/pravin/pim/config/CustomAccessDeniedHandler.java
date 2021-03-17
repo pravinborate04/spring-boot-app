@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
+ * This class to handler Access Denied requests
+ *
  * @author Pravin Borate
  * 14/03/21
  */

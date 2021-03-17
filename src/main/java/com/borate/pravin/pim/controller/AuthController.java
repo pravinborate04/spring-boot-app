@@ -19,6 +19,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
+ * Controller for Authenticating User
+ *
  * @author Pravin Borate
  * 14/03/21
  */
@@ -31,13 +33,21 @@ public class AuthController implements Constants {
     @Autowired
     AuthUserDetailService userDetailService;
 
+    /**
+     * This API is used for Authenticating user
+     * POST /api/login
+     *
+     * @param req
+     * @return
+     * @throws Exception
+     */
     @PostMapping(SEPARATOR + LOGIN)
     public ResponseEntity<Object> authenticate(@RequestBody AuthenticationRequest req) throws Exception {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword()));
         AuthUserDetails myUserDetail = userDetailService.loadUserByUsername(req.getUsername());
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         String token = Base64.getEncoder().encodeToString((req.getUsername() + ":" + req.getPassword()).getBytes(StandardCharsets.UTF_8));
-        return ResponseEntity.ok(new AuthenticationResponse(token, myUserDetail.getUsername(),myUserDetail.getUser().getRole()));
+        return ResponseEntity.ok(new AuthenticationResponse(token, myUserDetail.getUsername(), myUserDetail.getUser().getRole()));
     }
 
 }

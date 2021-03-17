@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.Instant;
 
 /**
+ * This interceptor to log each request and calculate time takem
+ *
  * @author Pravin Borate
  * 13/03/21
  */

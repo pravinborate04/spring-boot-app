@@ -1,6 +1,7 @@
 package com.borate.pravin.pim.service;
 
 import com.borate.pravin.pim.entities.Product;
+import com.borate.pravin.pim.helper.Constants;
 import com.borate.pravin.pim.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.List;
  * 11/03/21
  */
 @Service
-public class ProductService {
+public class ProductService implements Constants {
 
     @Autowired
     ProductRepository productRepository;
@@ -28,38 +29,57 @@ public class ProductService {
     EntityManager em;
 
 
+    /**
+     * Get all product filter by brand and active
+     *
+     * @param brand
+     * @param isActive
+     * @return List<Product>
+     */
     public List<Product> getAll(String brand, Boolean isActive) {
-
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
         Root<Product> product = cq.from(Product.class);
         List<Predicate> predicates = new ArrayList<>();
-
         cq.where(predicates.toArray(new Predicate[0]));
-
         if (brand != null) {
             predicates.add(cb.equal(product.get("brand"), brand));
         }
-
         if (isActive != null) {
             predicates.add(cb.equal(product.get("isActive"), isActive));
         }
         predicates.add(cb.equal(product.get("deleted"), false));
         cq.where(predicates.toArray(new Predicate[0]));
-        List<Product> resultList = em.createQuery(cq.select(product)).getResultList();
-        return resultList;
-        //return productRepository.findAll();
+        return em.createQuery(cq.select(product)).getResultList();
     }
 
+    /**
+     * Get Product by Id
+     *
+     * @param id
+     * @return Product
+     */
     public Product getOne(Long id) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
         return productRepository.getOne(id);
     }
 
+    /**
+     * Create Product
+     *
+     * @param product
+     * @return CreatedProduct
+     */
     public Product create(Product product) {
         return productRepository.save(product);
     }
 
+    /**
+     * Update Product by Id
+     *
+     * @param id
+     * @param product updatedProduct
+     * @return Updated Product
+     */
     public Product update(Long id, Product product) {
         if (id != null) {
             Product oldProduct = getOne(id);
@@ -76,6 +96,11 @@ public class ProductService {
         return getOne(id);
     }
 
+    /**
+     * Soft Delete Product by id
+     *
+     * @param id
+     */
     public void delete(Long id) {
         if (id != null) {
             Product product = getOne(id);

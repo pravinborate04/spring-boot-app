@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * The class provide the configuration setup for Authentication, Authorization,CORS configuration and spring security
+ *
  * @author Pravin Borate
  * 12/03/21
  */
@@ -34,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
     CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Value("${app.portal.url}")
-    String                          portalUrl;
+    String portalUrl;
 
     @SuppressWarnings("deprecation")
     @Bean
@@ -69,7 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler()).authenticationEntryPoint(customAuthenticationEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 // Permit all other request without authentication
-                .and().authorizeRequests().antMatchers(HttpMethod.GET).hasAnyAuthority("ADMIN","USER");
+                .and().authorizeRequests().antMatchers(HttpMethod.GET).hasAnyAuthority("ADMIN", "USER");
         // We don't need sessions to be created.
     }
 

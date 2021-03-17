@@ -1,6 +1,8 @@
 package com.borate.pravin.pim.dto;
 
 /**
+ * Dto for providing Authentication Response
+ *
  * @author Pravin Borate
  * 14/03/21
  */
@@ -10,10 +12,10 @@ public class AuthenticationResponse {
     private final String username;
     private final String role;
 
-    public AuthenticationResponse(String token,String username,String role){
+    public AuthenticationResponse(String token, String username, String role) {
         this.token = token;
         this.username = username;
-        this.role=role;
+        this.role = role;
     }
 
     public String getUsername() {
